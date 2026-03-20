@@ -26,3 +26,5 @@ while True:
             print("Invalid choice, pick again")
     elif menu_select == "2":
         print("Scoreboard")
+
+    print("monkey time")
