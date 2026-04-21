@@ -1,18 +1,20 @@
 import random
 
+# Rock paper scissors game
 def rps() -> bool:
     user_wins = 0
     for round in range(3):
         print(f"Round: {round + 1}")
-        valid_choices = ["rock", "paper", "scissors"]
+        valid_choices = ["1", "2", "3"]
 
         choices = {
-            "rock": "scissors",
-            "paper": "rock",
-            "scissors": "paper",
+            "1": "3",
+            "2": "1",
+            "3": "2",
         }
 
-        computer_choice = random.choice(valid_choices)
+        computer_choice = random.choice(valid_choices) # Randomises what the computer picks
+        print("1. rock \n2. paper \n3. scissors")
         user_choice = input("Enter your choice: ")
 
         while user_choice not in valid_choices:
@@ -21,39 +23,96 @@ def rps() -> bool:
 
         print(f"Computer chose: {computer_choice}")
 
+# Determines whether or not the user wins or loses and adds score
         if choices[user_choice] == computer_choice:
             print("You won!")
             user_wins += 1
         elif user_choice == computer_choice:
             print("Draw")
         else:
-            print("Loser")
+            print("Lose")
+        print("---------------------------------")
 
     return user_wins == 2
 
+#Hangman game
+
+def hangman() -> bool:
+    #List of all possible words used in hangman
+    valid_words = [
+        "cat", "dog", "sun", "hat", "ball", "tree", "book", "fish", "milk", "star",
+        "pen", "cup", "car", "bed", "map", "shoe", "cake", "ring", "leaf", "snow",
+        "banana", "orange", "purple", "guitar", "pencil", "school", "window", "rocket",
+        "butter", "jungle", "planet", "silver", "golden", "flower", "island", "desert",
+        "forest", "castle", "dragon", "pirate", "bridge", "camera", "bottle", "basket",
+        "awkward", "rhythm", "galaxy", "pneumonia", "xylophone", "mystify", "cryptic",
+        "oxygen", "zombie", "wizard", "nightmare", "triangle", "elephant", "dinosaur",
+        "computer", "laptop", "keyboard", "software", "hardware", "internet",
+        "queue", "jazzy", "fuzzy", "buzzing", "knapsack", "mnemonic", "syndrome",
+        "zigzag", "vortex", "blizzard", "jackpot", "jukebox", "buzzkill", "puzzling",
+        "pixel", "matrix", "lengthy", "strength", "twelfth", "unknown"
+    ]
+
+    random_word = random.choice(valid_words)
+    letters_guessed = []
+    wrong_letters = []
+    lives = 5
+
+    while lives > 0:
+        print("Lives:", lives)
+        print("Wrong letters: ", wrong_letters)
+        print("Word:", " ".join([letter if letter in letters_guessed else "_" for letter in random_word]))
+        print("---------------------------------")
+
+        guess = input("Enter your guess: ").lower()
+
+        if len(guess) != 1:
+            print("Invalid.")
+            continue
+
+        if guess in random_word:
+            if guess not in letters_guessed:
+                letters_guessed.append(guess)
+
+            if all(letter in letters_guessed for letter in random_word):
+                return True
+        else:
+            print("Wrong Letter.")
+            wrong_letters.append(guess)
+            lives -= 1
+    print("Word was: ", random_word)
+    return False
+
 scores = []
 score = 0
+
+#The main menu
 
 while True:
     print("1. Games")
     print("2. Scoreboard")
     print("3. Quit")
 
-    menu_select = input("Enter your choice (1, 2, 3): ")
+    menu_select = input("Enter your choice (1, 2, 3): ") #Easier to have the choices just be 1,2,3 as you don't have to worry as much
 
     if menu_select == "1":
         while True:
-            print("\n1. Hangman")
+            print("1. Hangman")
             print("2. Rock Paper Scissors")
             print("3. Back to menu")
 
             games = input("Pick a game: ")
 
             if games == "1":
-                print("Hangman")
+                if hangman():
+                    print("You won Hangman!")
+                    score += 1
+                else:
+                    print("You lost.")
+
             elif games == "2":
                 if rps():
-                    print("You won!")
+                    print("You won Rock Paper Scissors!")
                     score += 1
                 else:
                     print("You lost.")
@@ -68,16 +127,16 @@ while True:
 
     elif menu_select == "2":
         if len(scores) == 0:
-            print("No scores yet. You can be the first!")
+            print("No scores yet.")
         else:
             print("Top 3 Scores:")
-            sorted_scores = sorted(scores, reverse=True)
-            for i in range(min(3, len(sorted_scores))):
+            sorted_scores = sorted(scores,reverse=True) # Reverse sorts the numbers in descending order.
+            for i in range(min(3, len(sorted_scores))): # Only prints the top 3 scores recorded
                 print(f"{i + 1}. {sorted_scores[i]}")
 
     elif menu_select == "3":
         scores.append(score)
-        print("Quitting game...")
+        print("Quitting game.")
         break
 
     else:
