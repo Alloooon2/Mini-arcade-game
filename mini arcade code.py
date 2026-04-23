@@ -15,10 +15,10 @@ def rps() -> bool:
 
         computer_choice = random.choice(valid_choices) # Randomises what the computer picks
         print("1. rock \n2. paper \n3. scissors")
-        user_choice = input("Enter your choice: ")
+        user_choice = input("Enter your choice (1,2,3): ")
 
         while user_choice not in valid_choices:
-            print("Invalid choice.")
+            print("Invalid choice. Please enter either 1,2 or 3.")
             user_choice = input("Enter your choice: ")
 
         print(f"Computer chose: {computer_choice}")
@@ -67,7 +67,7 @@ def hangman() -> bool:
         guess = input("Enter your guess: ").lower()
 
         if len(guess) != 1:
-            print("Invalid.")
+            print("Invalid. Please enter a single letter.")
             continue
 
         if guess in random_word: # Replaces the '_' with the correct letter if you guessed right
@@ -133,6 +133,7 @@ while True:
             sorted_scores = sorted(scores,reverse=True) # Reverse sorts the numbers in descending order.
             for i in range(min(3, len(sorted_scores))): # Only prints the top 3 scores recorded
                 print(f"{i + 1}. {sorted_scores[i]}")
+            print("---------------------------------")
 
     elif menu_select == "3":
         scores.append(score)
