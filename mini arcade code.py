@@ -75,6 +75,7 @@ def hangman() -> bool:
                 letters_guessed.append(guess)
 
             if all(letter in letters_guessed for letter in random_word): # Sets condition for winning and breaks loop if condition is met
+                print("Word was: ", random_word)
                 return True
         else:
             print("Wrong Letter.") # Appends the wrong letters into a separate list which is printed at the start of each iteration
