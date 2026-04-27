@@ -120,7 +120,8 @@ while True:
                     print("You lost.")
 
             elif games == "3":
-                scores.append(score)
+                if score > 0:
+                    scores.append(score)
                 score = 0
                 break
 
