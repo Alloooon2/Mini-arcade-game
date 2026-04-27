@@ -33,7 +33,7 @@ def rps() -> bool:
             print("Lose")
         print("---------------------------------")
 
-    return user_wins == 2
+    return user_wins >= 2
 
 #Hangman game
 
@@ -78,9 +78,10 @@ def hangman() -> bool:
                 print("Word was: ", random_word)
                 return True
         else:
-            print("Wrong Letter.") # Appends the wrong letters into a separate list which is printed at the start of each iteration
-            wrong_letters.append(guess)
-            lives -= 1
+            if guess not in wrong_letters:
+                print("Wrong Letter.") # Appends the wrong letters into a separate list which is printed at the start of each iteration
+                wrong_letters.append(guess)
+                lives -= 1
     print("Word was: ", random_word)
     return False
 
